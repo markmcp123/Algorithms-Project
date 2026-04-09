@@ -68,14 +68,11 @@ public class SortingAlgorithm {
             i--;
         }
 
-        //print 0's//
-        for (int f = 0; f < countp[0]; f++) {
-            System.out.print("0 ");
-        }
+
 
         //print positives//
         //start from 1 as countpos[0] is for 0 count//
-        i = 1;
+        i = 0;
         while (i < countp.length) {
             if (countp[i] != 0) {
                 j = 0;
@@ -94,20 +91,24 @@ public class SortingAlgorithm {
         SortingAlgorithm sa = new SortingAlgorithm();
         TestingAlgorithms ta =  new TestingAlgorithms();
 
-        int n = 100000;
+        int n = 100;
         int[] arr = new int[n];
-        for(int i = 0; i < n; i++){
-            arr[i] = i;
+        for(int i = 0; i < n / 2; i++){
+            arr[i] = -i;
+        }
+        for(int i = n / 2; i < n; i++){
+            arr[i] = i - n / 2;
         }
         System.out.println(arr.length);
         shuffleArray(arr);
 
         //the following is used to test//
         long startTime = System.currentTimeMillis();
+        sa.algorithm1(arr.length, arr);
 
         //tests will take place here//
         System.out.println(Arrays.toString(arr));
-        ta.selectionSort(arr);
+       // ta.selectionSort(arr);
 
         //end of tests//
         long endTime = System.currentTimeMillis();
@@ -122,7 +123,8 @@ public class SortingAlgorithm {
                 hours + "h " + minutes + "m " + seconds + "s " + milliseconds + "ms");
 
         // Optional: verify the array is sorted
-        System.out.println("Is Array sorted correctly? " + isSorted(arr));
+
+     //  System.out.println("Is Array sorted correctly? " + isSorted(arr));
     }
 
     public static void shuffleArray(int[] arr) {
