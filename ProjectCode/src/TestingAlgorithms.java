@@ -1,4 +1,6 @@
 public class TestingAlgorithms {
+
+    public static final int QS_LIMIT = 10;
     public static void selectionSort(int[] arr){
         int temp;
         int min_index;
@@ -6,13 +8,13 @@ public class TestingAlgorithms {
         for(int i = 0; i < arr.length - 1; i++){
             min_index = i;
             for(int j = i + 1; j < arr.length; j++) {
-                if (arr[min_index] > arr[j]) {
+                if (arr[j] < arr[min_index]) {
                     min_index = j;
                 }
             }
-                temp = arr[i];
-                arr[i] = arr[min_index];
-                arr[min_index] = temp;
+                temp = arr[min_index];
+                arr[min_index] = arr[i];
+                arr[i] = temp;
         }
     }
 
@@ -84,9 +86,123 @@ public class TestingAlgorithms {
             a[k++] = r[j++];
         }
     }
-
     //end of merge sort//
 
-    //quickSort, heapSort and bucketSort still to be done//
+    // If array contains less than 10 elements, will use insertionSort as more practical
+    public static void quickSort(int[] a, int lo, int hi){
+        if(hi <= lo + QS_LIMIT - 1){
+            insertionSort(a);
+            return;
+        }
+
+        int median = medianOf3(a, lo, lo + (hi - lo) / 2, hi);
+        swap(a, lo, median);
+
+        int j = partition(a, lo, hi);
+        quickSort(a, lo, j - 1);
+        quickSort(a, j + 1, hi);
+    }
+
+    //Partition array into two smaller subarrays to make sorting easier
+    private static int partition(int[] a, int lo, int hi){
+        int i = lo;
+        int j = hi + 1;
+        while(true){
+            while(a[++i] < a[i]){
+                if(i == hi) break;
+            }
+            while(a[lo] < a[--j]){
+                if(j == lo) break;
+            }
+            if(i >= j) break;
+            swap(a, i, j);
+        }
+
+        swap(a, i, j);
+        return j;
+    }
+
+    //Function to swap two values within the array
+    private static void swap(int[] a, int i, int j){
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    //Practical improvement to QuickSort as best choice of pivot item is the median
+    private static int medianOf3(int[] a, int lo, int mid, int hi){
+        if((a[lo] >=  a[mid] && a[lo] <=  a[hi]) || (a[lo] <= a[mid] && a[lo] >= a[hi])){
+            return a[lo];
+        }
+        else if((a[mid] >= a[lo] && a[mid] <= a[hi]) || (a[mid] <= a[lo] && a[mid] >= a[hi])){
+            return a[mid];
+        }
+        else{
+            return a[hi];
+        }
+    }
+    //End of QuickSort and helper functions with it
+
+
+    public static void heapSort(int[] arr){
+        int n = arr.length;
+
+        for(int i = n / 2 - 1; i >= 0; i--){
+            heapify(arr, n, i);
+        }
+
+        for(int i = n - 1; i > 0; i--){
+            swap(arr, 0, i);
+            heapify(arr, i, 0);
+        }
+    }
+
+    //Helper function to heapify a subtree rooted with a node i
+    private static void heapify(int[] arr, int n, int i){
+        int largest = i;
+        int left =  2 * i + 1;
+        int right = 2 * i + 2;
+
+        if(left < n && arr[left] > arr[largest]){
+            largest = left;
+        }
+        if(right < n && arr[right] > arr[largest]){
+            largest = right;
+        }
+        if(largest != i){
+            swap(arr, i, largest);
+            heapify(arr, n, largest);
+        }
+    }
+    //End of heapSort
+
+
+    public static void bucketSort(int[] arr){
+        int n = arr.length;
+        int[] counts = new int[n];
+
+        int[][] buckets = new int[n][n];
+        for(int i = 0; i < n; i++){
+            buckets[i] = new int[n];
+        }
+
+        for(int i = 0; i < n; i++){
+            int bi = n * arr[i];
+            buckets[i][bi] = i;
+        }
+
+        for(int i = 0; i < n; i++){
+            insertionSort(buckets[i]);
+        }
+
+        int index = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < buckets[i][j]; j++){
+                arr[index++] = buckets[i][j];
+            }
+        }
+    }
+    //End of bucketSort
 }
+
 
