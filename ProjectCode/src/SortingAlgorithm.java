@@ -61,7 +61,7 @@ public class SortingAlgorithm {
                 //print every occurrence of the current value//
                 while (j < countn[i]) {
                     //i + 1 as arrays index from 0//
-                    System.out.print("-" + (i + 1) + " ");
+                    System.out.println("-" + (i + 1) + " ");
                     j++;
                 }
             }
