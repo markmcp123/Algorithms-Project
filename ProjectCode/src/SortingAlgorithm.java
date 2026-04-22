@@ -54,6 +54,7 @@ public class SortingAlgorithm {
         //used to print negatives from lowest to highest//
         int i = maxVal;
         int j;
+        System.out.print("Negatives:\n[ ");
         //print negatives first//
         while (i > 0) {
             if (countn[i] != 0) {
@@ -61,14 +62,15 @@ public class SortingAlgorithm {
                 //print every occurrence of the current value//
                 while (j < countn[i]) {
                     //i + 1 as arrays index from 0//
-                    System.out.println("-" + (i + 1) + " ");
+                    System.out.print("-" + (i + 1) + "  ");
                     j++;
                 }
             }
             i--;
         }
 
-
+        System.out.println("]");
+        System.out.print("Positives:\n[ ");
 
         //print positives//
         //start from 1 as countpos[0] is for 0 count//
@@ -78,12 +80,13 @@ public class SortingAlgorithm {
                 j = 0;
                 //print all occurernces of the current val//
                 while (j < countp[i]) {
-                    System.out.print((i + " "));
+                    System.out.print((i + "  "));
                     j++;
                 }
             }
             i++;
         }
+        System.out.println("]");
         return;
     }
 
@@ -99,14 +102,17 @@ public class SortingAlgorithm {
         for(int i = n / 2; i < n; i++){
             arr[i] = i - n / 2;
         }
-        System.out.println(arr.length);
+        System.out.println("Length of array: " + arr.length);
+        System.out.println();
         shuffleArray(arr);
 
         //the following is used to test//
         long startTime = System.currentTimeMillis();
         sa.algorithm1(arr.length, arr);
+        //System.out.println();
 
         //tests will take place here//
+        System.out.println("Original array (before sorting):");
         System.out.println(Arrays.toString(arr));
        // ta.selectionSort(arr);
 
